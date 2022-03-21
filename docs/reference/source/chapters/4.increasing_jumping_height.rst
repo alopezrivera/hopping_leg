@@ -1,0 +1,15 @@
+.. _sec:increasingheight:
+
+Increasing the Jumping Height
+=============================
+
+During our trials on the real system, we found that we are limited to around 0.5 m jumping height when we just apply feedforward forces in x-direction (see :eq:`fff`).
+
+.. math::
+    :label: fff
+
+    \pmb{\tau} = \pmb{J^T} \pmb{f_{ff}}
+
+Thus, just one motor applies torques during the lift-off.
+To use the full potential of both motors, we have to apply some feedforward forces within the friction cone in y-direction too. 
+Using heuristics, we found a feed forward force of 15 N in y-direction to be beneficial for the jumping height. In further research, the optimal feed forward force distribution can be found using optimal control. 

@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# Except for:
+!.gitignore
+!project.sty
+!report.sty
+!main.tex
+!main.pdf
+!logo.jpg

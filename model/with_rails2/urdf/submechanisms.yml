@@ -1,0 +1,8 @@
+submechanisms:
+
+- name: "hopping_leg"
+  type: "P2R"
+  contextual_name: "hopping_leg"
+  jointnames_independent: ["rail_prismatic", "hip_joint", "knee_joint"]
+  jointnames_spanningtree: ["rail_prismatic", "hip_joint", "knee_joint"]
+  jointnames_active: ["rail_prismatic", "hip_joint", "knee_joint"]

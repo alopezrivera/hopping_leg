@@ -1,0 +1,30 @@
+Results
+=======
+
+Hopping Control in Simulation
+-----------------------------
+
+The simulation was able to get close to the desired height values of 0.4 m, 0.5 m and 0.6 m.
+Since the state recognition in simulation is worse than in the real system, the desired height cannot always be reached correctly.
+In previous tests, using not the estimated but the real state, the simulation was able to maintain desired height in quite a stable manner.
+
+The joint torques for all three desired heights do not reach the torque limits during the lift-off phase (dark green background). 
+Hence, there is still more potential for higher jumps even without applying feed forward forces in the y-direction.
+
+Hopping Control in the Real System
+----------------------------------
+
+In the real system we observed, that the  energy shaping control was able to reach preset jumping heights of 0.4 m, 0.5 m and 0.6 m according to the estimated state. By observing the torques during these jumps we could see that during the lift-off phase (dark green background) the applied torques increase for higher jumping heights. 
+At 0.6 meters, the straight part of the desired elbow torques indicates, that the torques are clipped due to the motor torque limits. Hence, the elbow cannot apply higher torques, and we reached the limit of the energy shaping controller in combination with the commanded feed forward force of 15 N in y-direction. 
+
+Comparing the state estimation with the video sequences taken during the jumping trials we could see that the jumping height was a bit overestimated, especially for the desired height of 0.6 m we actually just reached about 0.58 m.
+
+Backflip Control
+----------------
+
+In simulation, energy shaping control has been implemented inclusive backflip support. This backflip support adds
+a trajectory to the current desired state and can follow arbitrary sequences of backflips, forward flips and normal jumps. 
+In our simulations, we found that this backflip control works quite stable.
+
+In the real system, we performed a backflip as well. Here we faced more issues due to the wiring, since the wires are likely to twist around the screws in the hopping leg. Hence, we lost the connection during our backflip. Nevertheless, we managed to do a full backflip.
+In future, it would be nice to try a sequence of forward- and backflips, as we have already implemented in simulation.

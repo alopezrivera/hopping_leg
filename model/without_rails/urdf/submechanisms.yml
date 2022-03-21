@@ -1,0 +1,8 @@
+submechanisms:
+
+- name: "hopping_leg"
+  type: "2R"
+  contextual_name: "hopping_leg"
+  jointnames_independent: ["urdf_hip", "urdf_knee"]
+  jointnames_spanningtree: ["urdf_hip", "urdf_knee"]
+  jointnames_active: ["urdf_hip", "urdf_knee"]

@@ -1,0 +1,42 @@
+Simulation Backflip Control
+===========================
+
+For the energy shaping control, a support to do flips has been implemented too. For these backflips, a trajectory has been added to the original desired hip joint angle :math:`q_1` during flight phase. Additionally, the joint positions had to be corrected by adding :math:`n\cdot 2\pi`, where `n` is the number of forward flips minus the number of backflips. This added values are updated directly before the flying phase, where a flip  will happen. Hence, the trajectory of the flip is cancelling out this difference in the beginning of the flip.
+For a backflip, the new joint position :math:`q_{1,t}` is defined with:
+
+.. math::
+
+     q_{1,t} = q_1 - 2 \pi + (-\pi \cos(\frac{\pi t}{\Delta t_{i-1} - t_s}) + \pi)
+
+where `t` is the time since the flip started, :math:`\Delta t_{i-1}` is the duration of the last flight phase and :math:`t_s` is a safety time, which was set to 0.1 s.
+For a forward flip, the expression was accordingly:
+
+.. math::
+
+    q_{1,t} = q_1 + 2 \pi - (-\pi \cos(\frac{\pi t}{\Delta t_{i-1} - t_s}) + \pi)
+
+Additionally, flips with a change of the knee direction have been implemented. For a backflip, the expression for the hip joint position was:
+
+.. math::
+
+    q_{1,t} = -q_1 - 2 \pi + (-(|q1| + \pi) \cos(\frac{\pi t}{\Delta t_{i-1} - t_s}) + \pi)
+
+and for a forward flip:
+
+.. math::
+
+    q_{1,t} = -q_1 - 2 \pi - (-(|q1| + \pi) \cos(\frac{\pi t}{\Delta t_{i-1} - t_s}) + \pi)
+
+At the same time, the position of the knee joint `q_2` has been updated for both flip directions with:
+
+.. math::
+
+    q_{2,t} = - q_2 \cos(\frac{\pi t}{\Delta t_{i-1} - t_s})
+
+To use these backflips, a list has been used to define arbitrary sequences of normal jumps and forward- and backflips, were always the next element is given to a prepare function, which adds or subtracts `2 \pi` to the current adjustment term and saves the new knee direction for inverse kinematics. Afterwards, the jumping mode is performed during flight phase.   
+
+Backflip in the Real System
+---------------------------
+
+In the real system, a backflip has been performed as well. This has been done much easier, by just commanding the current hip joint position plus `2 \pi` during the flight phase. Afterwards, the script stopped.
+In future, a similar approach to the simulation would be interesting.

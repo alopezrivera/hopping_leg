@@ -1,0 +1,30 @@
+Cartesian Stiffness Control
+===========================
+
+The low level control of the hopping leg has been realized using PD control. Here, three functions have been implemented after :cite:t:`di2020software`: A simple joint space PD controller with the control law:
+
+.. math::
+
+    \pmb{\tau } =\pmb{\tau_{ff}} + \pmb{K_{p,j}}(\pmb{q_{des}} - \pmb{q}) + \pmb{K_{d,j}}(\pmb{\dot q_{des}} - \pmb{\dot q} ),
+
+Cartesian stiffness control, with the control law: 
+
+.. math::
+
+    \pmb{\tau} = \pmb{J^T} (\pmb{f_{ff}} + \pmb{K_{p,c}}(\pmb{p_{des}} - \pmb{p}) + \pmb{K_{d,c}}(\pmb{\dot p_{des}} - \pmb{\dot p} )),
+
+
+and combined stiffness control, which combines the two controllers from above:
+
+.. math::
+
+    \pmb{\tau} = \pmb{\tau_{ff}} + \pmb{K_{p,j}}(\pmb{q_{des}} - \pmb{q}) + \pmb{K_{d,j}}(\pmb{\dot q_{des}} - \pmb{\dot q} ) + \pmb{J^T} (\pmb{f_{ff}} + \pmb{K_{p,c}}(\pmb{p_{des}} - \pmb{p}) + \pmb{K_{d,c}}(\pmb{\dot p_{des}} - \pmb{\dot p} )).
+
+:math:`\pmb{\tau}` denotes here the motor torque vector, :math:`\pmb{\tau_{ff}}` the commanded feed forward torques, :math:`\pmb{K_{p,j}}` and :math:`\pmb{K_{d,j}}` the joint space gain matrices, :math:`\pmb{K_{p,c}}` and :math:`\pmb{K_{d,c}}` the Cartesian space gain matrices, :math:`\pmb{J}` the hybrid Jacobian at the end effector and :math:`\pmb{f_{ff}}` the feed forward force in Cartesian space. The current and desired joint positions  are given with :math:`\pmb{q}` and :math:`\pmb{q_{des}}` in joint space, and the actual and desired end effector position vectors are written as :math:`\pmb{p}` and :math:`\pmb{p_{des}}`. 
+
+Parameter Tuning
+----------------
+The mentioned low level controllers require quite a few parameters to be tuned. Here, we see some differences between the tuning of the real system and tuning the simulation, therefore they have to be tuned individually.
+For the real system, the joint level control is likely to be done by the motor internal PD controller, as it is more stable. Therefore, it is recommended to just use the Cartesian stiffness control and tune the joint space gains separately in the internal motor controller. In simulation, there might be no internal motor  controller. Therefore, the combined stiffness can be used.
+
+When tuning the gains, one has to consider that higher joint level gains reduce the influence of the Cartesian stiffness and vice-versa. To stabilize the joint positions and counteract vibrations, larger joint space gains are more likely to give good results. For effectively applying some Cartesian feed forward forces instead, or to apply different stiffnesses in x and y direction, low joint level gains are required, since they can neutralize the feed forward forces otherwise. 

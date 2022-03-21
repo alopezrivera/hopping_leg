@@ -1,0 +1,12 @@
+State Estimation
+================
+
+For the energy shaping control, a height feedback is necessary. Therefore, a simple state estimation has been implemented. Since during the flight phase no additional forces can be applied to the system, we can expect the acceleration to be `g`. As we know the lift-off position and velocity, we can calculate the current height of the base `h` with:
+
+.. math::
+
+    h = \frac{1}{2} g (t^2 - t_0^2) - g t_0 (t - t_0) + v_0 (t - t_0) + h_0,
+
+where `t` is the current time and  `t_0` is the time at lift-off. `h_0` and  `v_0` denote the height and  velocity of the base at time `t_0`.
+
+This simple state estimator, which is only used during flight phase, since with ground contact forward kinematics are more accurate, gives us quite good results. Nevertheless, we still have to admit that it ignores friction and dynamic effects of the leg movements.

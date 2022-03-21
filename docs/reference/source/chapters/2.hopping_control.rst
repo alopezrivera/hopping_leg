@@ -1,0 +1,40 @@
+Hopping Control
+===============
+
+Hopping can be simplified with the Spring Loaded Inverted Pendulum (SLIP) model, in which a mass is mounted on a massless spring :cite:p:`Tedrake`. Due to this spring, the energy in the system stays constant. By adding or removing energy into the system, e.g., by applying some force to the spring, the jumping height can be controlled.
+
+Since our hopping leg is designed to have lightweight legs, it is similar to a SLIP model. The main difference is, that our hopping leg has no inbuilt elasticity. Therefore, it has to apply the desired jumping energy during every lift-off. To achieve this, two controllers have been implemented on top of a state machine. The state machine divides the jumping cycle into 3 (or 4) phases with different goals:  In the flight phase, the leg prepares its position for the touchdown. In the real system, this flight phase is divided into two phases, flight ascend and flight, since the contact detection does not work reliable. During the flight phase, the leg is stiff, since it has to reach a specific position. The flight phase ends with the first contact of the  leg with the ground. During the touchdown, the movement of the leg is damped, since its energy cannot be used due to the absence of elastic elements. When the downwards movement is fully stopped, the lift-off phase starts. The conditions for the phase transitions are written in \autoref{tab:conditions} more precisely.
+The two implemented control approaches both use this lift-off phase, to apply the desired energy for the next jump.
+
+Gain Scheduling Control
+-----------------------
+
+The gain scheduling control uses Cartesian stiffness control to mirror the behaviour of the spring in the SLIP model. For this, a high stiffness is necessary to reapply sufficient energy into the system. To be able to lift-off and to counteract dissipation, the desired leg length during the lift-off phase can be increased and/or a feed forward force can be applied.
+
+Energy Shaping Control
+----------------------
+
+The advantage of energy shaping control is, that we can control the jumping height by applying energy to the system until the desired energy :math:`E_{des}`, which is needed to jump at a desired height :math:`h_{des}`, is reached.
+With the simplification, that we assume all mass `m` in the shoulder of the jumping leg the desired energy can be calculated with:
+
+.. math::
+
+    E_{des} = m g h_{des}
+
+The used approach is non-continuous energy shaping, where we just observe the reached energy, which is: 
+
+.. math::
+
+    E \propto k F_e
+
+and hence:
+
+.. math:: 
+
+    \dot E \propto \dot k F_e
+
+Thus, we can add energy to the system by increasing `k` and remove energy by decreasing it. To control `k` the following update rule can be used:
+
+.. math::
+
+    k_{i+1} = k_{i}  (\frac{E_{des}}{E})^2
