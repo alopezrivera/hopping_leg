@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+"""
+State estimation for a hopping leg robot. This framework estimates the jumping height h of the leg based on 
+IMU measurements, contact sensor, joint encoders and forward kinematics.
+Maintainer:
+    Mihaela Popescu, mihaela.popescu@dfki.de
+"""
+
 import time
 import threading
 import numpy as np
-import virtual_sensors as sensors
 
-"""
-    State estimation for a hopping leg robot. This framework estimates the jumping height h of the leg based on 
-    IMU measurements, contact sensor, joint encoders and forward kinematics.
-    Maintainer:
-        Mihaela Popescu, mihaela.popescu@dfki.de
-"""
+from hopping_leg.state_estimation import virtual_sensors as sensors
 
 
 class StateEstimation:

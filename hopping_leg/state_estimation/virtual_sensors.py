@@ -1,29 +1,30 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+"""
+Collection of virtual sensor classes used for hopping leg state estimation based on PyBullet simulator.
+
+List of sensor classes:
+    - JointEncoder
+    - ContactSensor
+    - Imu
+    - MotionTracking
+
+Reference: 
+    - qiBullet - Bullet-based python simulation for SoftBank Robotics' robots.
+    - Repository: https://github.com/softbankrobotics-research/qibullet/tree/486e5943a9886a777eeacdc06e97e323ccd0cc31  
+    - License: Apache License 2.0 
+
+Maintainer:
+    Mihaela Popescu, mihaela.popescu@dfki.de
+"""
+
+
 import time
 import pybullet as p
 import threading
-from abstract_sensors import JointEncoderAbstract, ContactSensorAbstract, ImuAbstract, MotionTrackingAbstract
 
-
-"""
-    Collection of virtual sensor classes used for hopping leg state estimation based on PyBullet simulator.
-    
-    List of sensor classes:
-        - JointEncoder
-        - ContactSensor
-        - Imu
-        - MotionTracking
-    
-    Reference: 
-        - qiBullet - Bullet-based python simulation for SoftBank Robotics' robots.
-        - Repository: https://github.com/softbankrobotics-research/qibullet/tree/486e5943a9886a777eeacdc06e97e323ccd0cc31  
-        - License: Apache License 2.0 
-    
-    Maintainer:
-        Mihaela Popescu, mihaela.popescu@dfki.de
-"""
+from hopping_leg.state_estimation import JointEncoderAbstract, ContactSensorAbstract, ImuAbstract, MotionTrackingAbstract
 
 
 class JointEncoder(JointEncoderAbstract):
