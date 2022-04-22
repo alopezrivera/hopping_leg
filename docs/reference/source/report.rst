@@ -26,3 +26,5 @@ This title will not display
     
     chapters/*
     bibliography
+
+
